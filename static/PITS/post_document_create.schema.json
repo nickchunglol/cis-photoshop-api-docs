@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "post_document_create.schema.json",
+  "title": "post_document_create",
+  "description": "Initiates an asynchronous job to create a new psd and/or renditions",
+  "type": "object",
+  "required": [
+    "options",
+    "outputs"
+  ],
+  "properties": {
+    "options": {
+      "type": "object",
+      "required": [
+        "document"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "globalFont"
+          ]
+        },
+        {
+          "required": [
+            "fonts"
+          ]
+        },
+        {
+          "required": [
+            "layers"
+          ]
+        },
+        {
+          "required": [
+            "document"
+          ]
+        },
+        {
+          "required": [
+            "manageMissingFonts"
+          ]
+        }
+      ],
+      "properties": {
+        "globalFont": {
+          "type": "string"
+        },
+        "fonts": {
+          "$ref": "file_input.schema.json#/definitions/input_objects"
+        },
+        "layers": {
+          "$ref": "layers_create.schema.json#/definitions/layer_objects"
+        },
+        "document": {
+          "type": "object",
+          "minProperties": 1,
+          "allOf": [
+            {
+              "required": [
+                "height"
+              ]
+            },
+            {
+              "required": [
+                "width"
+              ]
+            },
+            {
+              "required": [
+                "resolution"
+              ]
+            },
+            {
+              "required": [
+                "mode"
+              ]
+            },
+            {
+              "required": [
+                "fill"
+              ]
+            }
+          ],
+          "properties": {
+            "height": {
+              "type": "integer",
+              "description": "in pixels"
+            },
+            "width": {
+              "type": "integer",
+              "description": "in pixels"
+            },
+            "resolution": {
+              "type": "integer",
+              "minimum": 72,
+              "maximum": 300,
+              "description": "in pixels per inch"
+            },
+            "fill": {
+              "type": "string",
+              "enum": [
+                "white",
+                "backgroundColor",
+                "transparent"
+              ],
+              "description": "type of fill for the background layer"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "bitmap",
+                "greyscale",
+                "indexed",
+                "rgb",
+                "cmyk",
+                "hsl",
+                "hsb",
+                "multichannel",
+                "duotone",
+                "lab",
+                "xyz"
+              ],
+              "description": ""
+            },
+            "depth": {
+              "type": "integer",
+              "enum": [
+                8,
+                16,
+                32
+              ],
+              "description": "bit depth, this is either 8, 16 or 32 bit"
+            }
+          }
+        },
+        "manageMissingFonts": {
+          "enum": [
+            "fail",
+            "useDefault"
+          ]
+        }
+      }
+    },
+    "outputs": {
+      "$ref": "file_output.schema.json#/definitions/output_objects"
+    },
+    "jobId": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

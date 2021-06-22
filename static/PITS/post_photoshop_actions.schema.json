@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "post_photoshop_actions.schema.json",
+  "title": "post_photoshop_actions",
+  "description": "Initiates an asynchronous job to play Photoshop Actions",
+  "type": "object",
+  "required": [
+    "inputs",
+    "options",
+    "outputs"
+  ],
+  "properties": {
+    "inputs": {
+      "$ref": "file_input.schema.json#/definitions/input_objects_max_1"
+    },
+    "options": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "actions"
+          ]
+        },
+        {
+          "required": [
+            "uxp"
+          ]
+        }
+      ],
+      "properties": {
+        "actions": {
+          "$ref": "file_input.schema.json#/definitions/input_objects_action"
+        },
+        "fonts": {
+          "$ref": "file_input.schema.json#/definitions/input_objects"
+        },
+        "patterns": {
+          "$ref": "file_input.schema.json#/definitions/input_objects"
+        },
+        "brushes": {
+          "$ref": "file_input.schema.json#/definitions/input_objects"
+        }
+      }
+    },
+    "outputs": {
+      "$ref": "file_output_pegasus.schema.json#/definitions/output_objects"
+    },
+    "jobId": {
+      "type": "string"
+    }
+  }
+}
